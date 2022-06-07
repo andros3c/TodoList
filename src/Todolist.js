@@ -12,8 +12,29 @@ function useLocalStorage(name,initialValue){
     return[value,setValue]
 }
 
-function Todo(){
-   
+function Todo({local,setLocal}){
+//     const [local,setLocal]=useLocalStorage("todoList",{"todo":[],"done":[]})
+    function HasDone(element,index){
+     const newTodo = local.todo.splice(index,1)
+     console.log(newTodo)
+     setLocal(
+         {
+            ...local,
+            done:[...local.done,element,],
+         }
+     )
+    }
+   return(
+       <div>
+           {
+               local.todo.map((element,index)=><div key={index}>
+                    <input  onClick={()=>HasDone(element,index)} type="checkbox" id={element}></input>
+                   <label  htmlFor={element}>{element}</label>
+                  
+               </div>)
+           }
+       </div>
+   )
 }
 
 
@@ -22,7 +43,7 @@ export default function TodoList(){
 
 
 const [value,setValue]=React.useState("")
-const [local,setLocal]=useLocalStorage("todoList",{"todo":[],})
+const [local,setLocal]=useLocalStorage("todoList",{"todo":[],"done":[]})
 
 
 function HandleSubmit(e){
@@ -43,7 +64,8 @@ function HandleSubmit(e){
             <input value={value} onChange={(e)=>setValue(e.target.value)}></input>
             </form>
 
-            <Todo/>
+            <Todo local={local} setLocal={setLocal}/>
+            
         </div>
     )
 }
