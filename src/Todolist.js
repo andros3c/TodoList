@@ -145,7 +145,7 @@ export default function TodoList() {
       </form>
 
       <div>
-        {local.todo.length == 0 ? (
+        {local.todo.length === 0 ? (
           <>
             <h3 className="text-center fs-4 font-monospace">Nothing to do</h3>
           </>
@@ -162,7 +162,7 @@ export default function TodoList() {
       <br />
       <br />
       <div>
-        {local.done.length == 0 ? (
+        {local.done.length === 0 ? (
           <></>
         ) : (
           <>
