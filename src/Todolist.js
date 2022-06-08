@@ -1,7 +1,6 @@
 import * as React from "react";
 
-import uuid from 'react-uuid'
-
+import uuid from "react-uuid";
 
 function useLocalStorage(name, initialValue) {
   const [value, setValue] = React.useState(
@@ -18,7 +17,7 @@ function useLocalStorage(name, initialValue) {
 
 function Todo({ local, setLocal }) {
   function HasDone(element, index) {
-   const newTodo = local.todo.splice(index, 1);
+    const newTodo = local.todo.splice(index, 1);
     setLocal({
       ...local,
       done: [...local.done, element],
@@ -30,18 +29,27 @@ function Todo({ local, setLocal }) {
       ...local,
     });
   }
+
   return (
     <ul className="list-group">
       {local.todo.map((element, index) => (
-        <li className="list-group-item" key={uuid()}>
-          <input
+        <li
+          className="list-group-item"
           key={uuid()}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <input
+            key={uuid()}
             onClick={() => HasDone(element, index)}
             type="checkbox"
             id={element}
           ></input>
           <label htmlFor={element}>{element}</label>
-          <button className="btn btn-danger" onClick={() => Deletetodo(index)}>
+          <button className="btn btn-sm btn-danger" onClick={() => Deletetodo(index)}>
             Delete
           </button>
         </li>
@@ -67,7 +75,15 @@ function Done({ local, setLocal }) {
   return (
     <ul className="list-group">
       {local.done.map((element, index) => (
-        <li className="list-group-item" key={uuid()}>
+        <li
+          className="list-group-item"
+          key={uuid()}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <input
             key={uuid()}
             type="checkbox"
@@ -78,7 +94,7 @@ function Done({ local, setLocal }) {
           <label htmlFor={element} style={{ textDecoration: "line-through" }}>
             {element}
           </label>
-          <button className="btn btn-danger" onClick={() => Deletedone(index)}>
+          <button className="btn btn-sm btn-danger" onClick={() => Deletedone(index)}>
             Delete
           </button>
         </li>
@@ -102,19 +118,43 @@ export default function TodoList() {
     }
   }
   return (
-    <div>
+    <div className="border" style={{width:"25%",marginTop:"30px",marginBottom:"30px",padding:"40px"}}>
       <form onSubmit={HandleSubmit}>
-        <h1>TodoList</h1>
-        <input value={value} onChange={(e) => setValue(e.target.value)}></input>
+        <h1 className="text-center font-monospace">TodoList</h1>
+        <br/>
+        <input
+          value={value}
+          class="form-control"
+          onChange={(e) => setValue(e.target.value)}
+        ></input>
+         <br/>
       </form>
 
       <div>
-        <h3>What things to do</h3>
-        <Todo local={local} setLocal={setLocal} />
+        {local.todo.length == 0 ? (
+          <>
+            <h3 className="text-center fs-4 font-monospace">Nothing to do</h3>
+          </>
+        ) : (
+          <>
+            <h3 className="text-center fs-4 font-monospace">What things to do</h3>
+            <br/>
+            <Todo local={local} setLocal={setLocal} />
+          </>
+        )}
       </div>
+      <br/>
+      <br/>
       <div>
-        <h3>What things has done</h3>
-        <Done local={local} setLocal={setLocal} />
+        {local.done.length == 0 ? (
+          <></>
+        ) : (
+          <>
+            {" "}
+            <h3 className="text-center fs-4 font-monospace">What things has done</h3>
+            <Done local={local} setLocal={setLocal} />
+          </>
+        )}
       </div>
     </div>
   );
