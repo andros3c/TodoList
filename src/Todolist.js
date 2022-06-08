@@ -17,7 +17,7 @@ function useLocalStorage(name, initialValue) {
 
 function Todo({ local, setLocal }) {
   function HasDone(element, index) {
-    const newTodo = local.todo.splice(index, 1);
+    local.todo.splice(index, 1);
     setLocal({
       ...local,
       done: [...local.done, element],
@@ -49,7 +49,10 @@ function Todo({ local, setLocal }) {
             id={element}
           ></input>
           <label htmlFor={element}>{element}</label>
-          <button className="btn btn-sm btn-danger" onClick={() => Deletetodo(index)}>
+          <button
+            className="btn btn-sm btn-danger"
+            onClick={() => Deletetodo(index)}
+          >
             Delete
           </button>
         </li>
@@ -94,7 +97,10 @@ function Done({ local, setLocal }) {
           <label htmlFor={element} style={{ textDecoration: "line-through" }}>
             {element}
           </label>
-          <button className="btn btn-sm btn-danger" onClick={() => Deletedone(index)}>
+          <button
+            className="btn btn-sm btn-danger"
+            onClick={() => Deletedone(index)}
+          >
             Delete
           </button>
         </li>
@@ -118,16 +124,24 @@ export default function TodoList() {
     }
   }
   return (
-    <div className="border" style={{width:"25%",marginTop:"30px",marginBottom:"30px",padding:"40px"}}>
+    <div
+      className="border"
+      style={{
+        width: "25%",
+        marginTop: "30px",
+        marginBottom: "30px",
+        padding: "40px",
+      }}
+    >
       <form onSubmit={HandleSubmit}>
         <h1 className="text-center font-monospace">TodoList</h1>
-        <br/>
+        <br />
         <input
           value={value}
-          class="form-control"
+          className="form-control"
           onChange={(e) => setValue(e.target.value)}
         ></input>
-         <br/>
+        <br />
       </form>
 
       <div>
@@ -137,21 +151,25 @@ export default function TodoList() {
           </>
         ) : (
           <>
-            <h3 className="text-center fs-4 font-monospace">What things to do</h3>
-            <br/>
+            <h3 className="text-center fs-4 font-monospace">
+              What things to do
+            </h3>
+            <br />
             <Todo local={local} setLocal={setLocal} />
           </>
         )}
       </div>
-      <br/>
-      <br/>
+      <br />
+      <br />
       <div>
         {local.done.length == 0 ? (
           <></>
         ) : (
           <>
             {" "}
-            <h3 className="text-center fs-4 font-monospace">What things has done</h3>
+            <h3 className="text-center fs-4 font-monospace">
+              What things has done
+            </h3>
             <Done local={local} setLocal={setLocal} />
           </>
         )}
